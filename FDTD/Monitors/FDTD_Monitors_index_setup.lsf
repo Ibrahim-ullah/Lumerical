@@ -1,0 +1,49 @@
+# Add structures
+# add slab
+addrect;
+set("name","slab");
+set("x",0);
+set("x span",3e-6);
+set("y",0);
+set("y span",3e-6);
+set("z",0);
+set("z span",0.3e-6);
+set("index",2.65); # refractive index
+
+# add photonic crystal pattern etching
+addobject("hex_pc_cav"); # add from object library
+set("material","etch");
+set("H number",2);
+set("n side",8);
+set("x",0);
+set("y",0);
+set("z",0);
+set("z span",0.3e-6);
+
+# Add simulation region
+addfdtd;
+set("x",0);
+set("x span",2.5e-6);
+set("y",0);
+set("y span",2.5e-6);
+set("z",0);
+set("z span",1e-6);
+set("x min bc","symmetric");
+set("y min bc","symmetric");
+
+# Add mesh override region to make sure mesh is periodic with structure period
+addmesh;
+set("override z mesh",0); # only override mesh in x and y directions
+set("x",0);
+set("x span",16*0.13e-6);
+set("dx",0.13e-6/8);
+set("y",0);
+set("y span",16*0.13e-6*sin(60*pi/180));
+set("dy",0.13e-6/8*sin(60*pi/180));
+
+# Add dipole sources
+adddipole;
+set("x",0.05e-6);
+set("y",0.05e-6);
+set("wavelength start",0.5e-6);
+set("wavelength stop",0.6e-6);
